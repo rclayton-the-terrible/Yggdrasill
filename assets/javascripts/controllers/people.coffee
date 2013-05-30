@@ -1,20 +1,29 @@
 ###global define###
 
-define ['c/controllers', 'services/people'], (controllers) ->
-	'use strict'
+define ['lodash', 'c/controllers'], (_, controllers) ->
+  'use strict'
 
-	controllers.controller 'people', ['$scope', 'people', ($scope, service) ->
-		$scope.error = ''
-		$scope.name = ''
-		$scope.people = service.people
+  controllers.controller 'PeopleController', ['$scope', ($scope) ->
 
-		$scope.insertPerson = (name) ->
-			service.post name
-			, (Resource, getResponseHeaders) ->
-				$scope.error = ''
-				$scope.name = ''
-			, (obj) ->
-				($scope.error = obj.data) if obj.status is 403
+    $scope.focusedView = "overview-people"
 
-		service.get()
-	]
+    getPeople = (query) =>
+      query = query ? {}
+      dpd.people.get query, (data) =>
+        $scope.people = _.values data
+        $scope.$apply()
+
+    getPeople()
+
+    limit = 25
+
+    $scope.page = 1
+
+    $scope.search = =>
+      query = { $limit: limit, $skip: ($scope.page - 1) * limit}
+      getPeople query
+
+
+
+
+  ]

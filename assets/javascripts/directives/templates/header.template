@@ -1,0 +1,2 @@
+<ng-include src="'menu'"></ng-include>
+<ng-include src="'loginstatus'"></ng-include>

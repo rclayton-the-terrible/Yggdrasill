@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <br /><br /><br /><br />
+    <div class="row-fluid">
+        <div class="span4"></div>
+        <div class="span4 list-container">
+            <form class="form-horizontal">
+                <legend>Please login to continue.</legend>
+                <div class="alert alert-error" ng-show="error">{{error}}</div>
+                <div class="control-group">
+                    <label class="control-label" for="inputUsername">Username:</label>
+                    <div class="controls">
+                        <input type="text" style="width: 254px" ng-model="username"
+                               id="inputUsername" placeholder="Username" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password:</label>
+                    <div class="controls">
+                        <input type="password" style="width: 254px" ng-model="password"
+                               id="inputPassword" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-success"
+                                ng-click="login()"
+                                style="width: 130px">Login</button>
+                        <button type="submit" class="btn"
+                                ng-click="request()"
+                                style="width: 130px">Request Account</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="span4"></div>
+    </div>
+</div>
+<br />

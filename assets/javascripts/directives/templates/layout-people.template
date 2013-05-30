@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12 title">People</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4 list-container" style="min-height: 600px">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Given Name</th>
+                        <th>Family Name</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="person in people">
+                        <td><a ng-click="select(person.id)">Select</a></td>
+                        <td>{{person.givenName}}</td>
+                        <td>{{person.familyName}}</td>
+                        <td><a ng-click="edit(person.id)">Edit</a></td>
+                        <td><a ng-click="remove(person.id)">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                Page: <input type="number" ng-model="page" ng-change="search()" />
+            </p>
+        </div>
+        <div class="span8 list-container" style="min-height: 600px">
+            <div ng-include="focusedView"></div>
+        </div>
+    </div>
+</div>
+<br />
