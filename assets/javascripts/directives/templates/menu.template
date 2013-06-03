@@ -1,8 +1,8 @@
-<div class="navbar navbar-fixed-top" style="margin-bottom: 0px">
+<div class="navbar navbar-fixed-top" style="margin-bottom: 0px;">
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="brand" href="#" style="padding-top: 5px">
-               <img src="img/yggdrasill_white_logo.png" height="20" />
+               <img src="img/yggdrasill_white_logo.png" style="height: 30px" />
             </a>
             <ul class="nav">
                 <li class="divider-vertical"></li>
@@ -12,48 +12,57 @@
                 <li class="divider-vertical"></li>
                 <li>
                     <a href="#/people">
-                        <i class="icon-user icon-gray"></i>
+                        <i class="icon-group"></i>
                         <span>People</span>
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
                 <li>
                     <a href="#/links">
-                        <i class="icon-star icon-gray"></i>
+                        <i class="icon-link"></i>
                         <span>Links</span>
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
                 <li>
                     <a href="#/sources">
-                        <i class="icon-list icon-gray"></i>
+                        <i class="icon-list"></i>
                         <span>Sources</span>
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
                 <li>
                     <a href="#/media">
-                        <i class="icon-picture icon-gray"></i>
+                        <i class="icon-picture"></i>
                         <span>Media</span>
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
                 <li>
                     <a href="#/comments">
-                        <i class="icon-comment icon-gray"></i>
+                        <i class="icon-comment"></i>
                         <span>Comments</span>
                     </a>
                 </li>
                 <li class="divider-vertical"></li>
             </ul>
+            <ng-include src="'loginstatus'"></ng-include>
             <ul class="nav pull-right">
                 <li class="divider-vertical"></li>
                 <li>
+                    <a href="#/graph">
+                        <i class="icon-sitemap"></i>
+                        <span>Graph</span>
+                    </a>
+                </li>
+                <li class="divider-vertical"></li>
+                <li>
                     <a href="#/export">
-                        <i class="icon-share icon-gray"></i>
+                        <i class="icon-share icon-fixed-width"></i>
                         <span>Export</span>
                     </a>
                 </li>
+                <li class="divider-vertical"></li>
             </ul>
         </div>
     </div>

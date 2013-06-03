@@ -1,22 +1,23 @@
-<div class="container-fluid" ng-controller="LoginStatusController">
-    <div class="row-fluid">
-        <div class="pull-right login-bar">
-            <div ng-show="!isLoggedIn">
-                <a href="#/login">Click here to login.</a></div>
-            <div ng-show="isLoggedIn">
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i>
-                        &nbsp;&nbsp;&nbsp;{{displayName}}</a>
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#/user-profile/{{username}}"><i class="icon-list-alt"></i>
-                            &nbsp;&nbsp;&nbsp;Profile</a></li>
-                        <li><a href="#/logout"><i class="icon-off"></i>
-                            &nbsp;&nbsp;&nbsp;Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<ul class="nav pull-right" ng-controller="LoginStatusController">
+    <li class="dropdown" ng-show="isLoggedIn">
+        <a class="dropdown-toggle" data-toggle="dropdown">
+           <i class="icon-user icon-gray"></i>&nbsp;&nbsp;&nbsp;{{displayName}}
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#/user-profile/{{username}}">
+                    <i class="icon-list-alt"></i>
+                    &nbsp;&nbsp;&nbsp;Profile
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li><a href="#/logout">
+                    <i class="icon-off"></i>
+                    &nbsp;&nbsp;&nbsp;Logout
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="!isLoggedIn"><a href="#/login">Login</a></li>
+    <li class="divider-vertical"></li>
+</ul>

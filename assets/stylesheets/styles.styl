@@ -4,15 +4,11 @@
 html, body
   height: 100%;
 
-body
-  background-image url("/img/shattered.png")
-  background-repeat repeat
-
 .wrapper
   min-height: 100%
   height auto !important
   height 100%
-  margin 42px auto -200px auto
+  margin 53px auto -200px auto
 
 .footer, .push
   height 200px
@@ -46,8 +42,26 @@ body
 .nav li a i
   margin-right 6px
 
-.nav li a:hover i
-  background-image: url("../img/glyphicons-halflings-white.png")
+.subnav
+  background-color #ddd
+  border-bottom 2px solid #aaa
+  width 100%
+  position fixed
+  height 36px
+  margin-top -2px
+  padding 2px 10px
+  box-shadow: 0px 1px 14px #999;
+
+.push-top
+  padding-top 36px
+
+.w32px
+  width 32px
+
+.graph-canvas
+  background-image url("/img/cream_pixels.png")
+  border 1px solid #ccc
+  border-radius 4px
 
 .fade-hide-setup, .fade-show-setup
   -webkit-transition all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.75s
@@ -66,3 +80,32 @@ body
 
 .fade-show-setup.fade-show-start
   opacity 1
+
+.panel-big
+  min-height 800px
+  padding 10px
+
+.panel-big
+  min-height 600px
+  padding 10px
+
+.panel-small
+  min-height 380px
+  padding 10px
+
+.panel-white
+  background-color #fff
+
+
+.panel-green
+  background-color #669966
+  border-bottom 4px solid #88AA88
+  box-shadow 0px 1px 14px #336633
+
+.panel-about
+  background-image url("/img/yggdrasill_trans350px.png")
+  background-repeat no-repeat
+
+.bigfooter
+  background-color: rgb(44, 62, 80);
+  background-image: -webkit-linear-gradient(top, rgb(44, 62, 80), rgb(44, 62, 80));

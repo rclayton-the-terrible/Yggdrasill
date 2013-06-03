@@ -1,0 +1,26 @@
+<div class="container-fluid panel-white panel-big">
+    <div class="row-fluid">
+        <div class="span4">
+            <legend>Known Actors</legend>
+            <table class="table table-condensed table-striped">
+                <tbody>
+                <tr ng-repeat="person in people">
+                    <td><a ng-click="select(person.id)">Select</a></td>
+                    <td>{{person.name}}</td>
+                    <td><a ng-click="edit(person.id)">Edit</a></td>
+                    <td><a ng-click="remove(person.id)">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pull-right" style="margin-top: 25px;">
+                <ul class="pager">
+                    <li ng-show="hasPrevious"><a ng-click="previous()">Previous</a></li>
+                    <li ng-show="hasNext"><a ng-click="next()">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="span8">
+            <div ng-include="focusedView"></div>
+        </div>
+    </div>
+</div>

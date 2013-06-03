@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entity Resolver</title>
+    <style type="text/css">
+
+        .unresolved-item {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            background-color: #efefef;
+            padding: 10px;
+        }
+
+    </style>
+    <script type="text/javascript" src="dpd.js"></script>
+    <script type="text/javascript" src="/js/md5.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.0.1.min.js"></script>
+    <script type="text/javascript" src="/js/lodash.min.js"></script>
+    <script type="text/javascript" src="/js/handlebars.js"></script>
+    <script id="button-template" type="text/x-handlebars-template">
+        <button type="button" class="btnResolve"
+                linkId="{{linkid}}" propName="{{prop}}"
+                propValue="{{value}}">{{label}}</button>
+    </script>
+    <script id="nooption-template" type="text/x-handlebars-template">
+        <button type="button" class="btnNooption" propName="{{prop}}"
+                linkId="{{linkid}}" entityName="{{name}}">** Create Entity - Reloads Page **</button>
+    </script>
+    <script id="unresolved-template" type="text/x-handlebars-template">
+        <p class="unresolved-item">
+            <strong>{{unresolved}}</strong>
+            with possibilities of:
+            {{#each possibilities}}
+               {{> btnOption}}
+            {{/each}}
+            {{> btnNoOption}}
+        </p>
+    </script>
+    <script type="text/javascript">
+
+        var unresolvedTemplate = Handlebars.compile(
+                $("#unresolved-template").html());
+
+        Handlebars.registerPartial("btnOption",$("#button-template").html());
+        Handlebars.registerPartial("btnNoOption",$("#nooption-template").html());
+
+        var SLICE_SIZE = "unknown:".length;
+
+
+        var generateRegex = function(name){
+
+            var parts = name.split(/\s/gim);
+
+            var buffer = "";
+
+            for (var p in parts){
+
+                if (_.isEmpty(buffer)){
+
+                    buffer += parts[p];
+                }
+                else {
+
+                    buffer += "|" + parts[p];
+                }
+            }
+
+            return buffer;
+        };
+
+        var processLink = function(link, prop){
+
+            var name = link[prop].slice(SLICE_SIZE);
+
+            dpd.people.get({ name: { $regex: generateRegex(name), $options: "i" } }, function(matches){
+
+               var context = {
+                   unresolved: name,
+                   linkid: link.id,
+                   name: name,
+                   prop: prop,
+                   possibilities: []
+               };
+
+               matches.forEach(function(match){
+
+                    context.possibilities.push({
+                        linkid: link.id,
+                        prop: prop,
+                        value: match.id,
+                        label: match.name
+                    });
+               });
+
+               $("#entities").append(unresolvedTemplate(context));
+            });
+        };
+
+        var resolveEntity = function(linkid, prop, value, callback){
+
+            var updates = {};
+            updates[prop] = value;
+
+            dpd.links.put(linkid, updates, function(){
+                console.log("Updated!");
+                callback();
+            });
+        };
+
+        var createEntityAndResolve = function(linkid, prop, name, callback){
+
+            dpd.people.post({ name: name }, function(person){
+
+                console.log("Person created: " + person.id);
+
+                resolveEntity(linkid, prop, person.id, callback);
+            });
+        };
+
+        $(function(){
+
+            dpd.links.get({ node1: { $regex: "unknown.*", $options: "i" } }, function(links){
+
+              links.forEach(function(link){
+                 processLink(link, "node1");
+              });
+
+            })
+
+            dpd.links.get({ node2: { $regex: "unknown.*", $options: "i" } }, function(links){
+
+                links.forEach(function(link){
+                    processLink(link, "node2");
+                });
+
+            })
+
+            $("body").on("click", ".btnResolve", function(){
+                console.log("Resolve Entity");
+                var $this = $(this);
+                var linkid = $this.attr("linkId");
+                var prop = $this.attr("propName");
+                var value = $this.attr("propValue");
+                resolveEntity(linkid, prop, value, function(){
+                    $this.parent().fadeOut(function(){
+                        $this.parent().remove();
+                    });
+                });
+            });
+
+            $("body").on("click", ".btnNooption", function(){
+                console.log("No option");
+                var $this = $(this);
+                var linkid = $this.attr("linkId");
+                var prop = $this.attr("propName");
+                var name = $this.attr("entityName");
+                createEntityAndResolve(linkid, prop, name, function(){
+                    window.location.href = window.location.href;
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div id="entities"></div>
+</body>
+</html>

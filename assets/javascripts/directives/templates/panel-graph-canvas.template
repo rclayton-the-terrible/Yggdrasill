@@ -1,0 +1,40 @@
+<br />
+<div class="container-fluid panel-white panel-mega">
+    <div class="row-fluid">
+        <div class="span9">
+            <button type="button" ng-click="performLayout('grid')"
+                    class="btn btn-mini w32px">
+                <i class="icon-th"></i>
+            </button>
+            <button type="button" ng-click="performLayout('breadthfirst')"
+                    class="btn btn-mini w32px">
+                <i class="icon-sitemap"></i>
+            </button>
+            <button type="button" ng-click="performLayout('circle')"
+                    class="btn btn-mini w32px">
+                <i class="icon-spinner"></i>
+            </button>
+            <button type="button" ng-click="performLayout('arbor')"
+                    class="btn btn-mini w32px">
+                <i class="icon-code-fork"></i>
+            </button>
+            <span style="color: rgb(191, 198, 203); margin: 0px 10px;">|</span>
+            <button type="button" ng-click="clearGraph()"
+                    class="btn btn-mini">
+                <i class="icon-remove-sign"></i> Clear Graph
+            </button>
+        </div>
+        <div class="span3">
+
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span9 graph-canvas">
+            <cytoscape name="people-graph"
+                       height="100%" width="100%" min-height="600px" />
+        </div>
+        <div class="span3">
+
+        </div>
+    </div>
+</div>

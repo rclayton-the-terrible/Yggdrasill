@@ -1,7 +1,7 @@
 #using requirejs config + require
 
 requirejs.config
-  urlArgs: "bust=" +  (new Date()).getTime()
+  #urlArgs: "bust=" +  (new Date()).getTime()
   map:
     '*':
       'vendor/angularResource': 'vendor/angular-resource'
@@ -14,6 +14,8 @@ requirejs.config
     twboot:"vendor/bootstrap"
     lodash: "vendor/lodash"
     async: "vendor/async"
+    smscroll: "vendor/jquery.smooth-scroll.min"
+    cytoscape: "vendor/cytoscape"
   shim:
     'ang':
       deps: ['vendor/modernizr']
@@ -21,6 +23,8 @@ requirejs.config
     'vendor/angular-resource': ['ang']
     'vendor/modernizr':
       exports: 'Modernizr'
+    'smscroll': ['jquery']
+    'cytoscape': ['jquery', 'vendor/arbor']
 
 requirejs ['app'
     'l18n!nls/hello'
@@ -35,12 +39,13 @@ requirejs ['app'
     'c/links'
     'c/media'
     'c/sources'
+    'c/graph'
     'c/login'
     'c/logout'
     'c/loginstatus'
     'd/ngController'
-    'd/tab'
-    'd/tabs'
+    'd/cytoscape'
+    'services/graph'
     'filters/twitterfy'
     'ang'
     'responseInterceptors/dispatcher'
@@ -83,9 +88,19 @@ requirejs ['app'
           templateUrl: 'layout-people'
           reloadOnSearch: true
 
+        .when '/people/:personid',
+          controller: 'PeopleController'
+          templateUrl: 'layout-people'
+          reloadOnSearch: true
+
         .when '/sources',
           controller: 'SourcesController'
           templateUrl: 'layout-sources'
+          reloadOnSearch: true
+
+        .when '/graph',
+          controller: 'GraphController'
+          templateUrl: 'layout-graph'
           reloadOnSearch: true
 
         .when '/login',

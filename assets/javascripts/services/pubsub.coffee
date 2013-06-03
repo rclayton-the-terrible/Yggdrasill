@@ -24,6 +24,7 @@ class MenuChannel extends Channel
     @on "menuItemClicked", handler
 
 
+
 define ["ang", "lodash", "async", "services/services"], (angular, _, async, services)->
 
   console.log "Registering PubSub Channels"

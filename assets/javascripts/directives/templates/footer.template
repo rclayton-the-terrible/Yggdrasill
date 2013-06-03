@@ -1,4 +1,4 @@
-<div class="footer bigfooter container-fluid">
+<div class="footer navbar-inner container-fluid" style="border-radius: 0">
     <div class="row-fluid">
         <div class="span4">
 

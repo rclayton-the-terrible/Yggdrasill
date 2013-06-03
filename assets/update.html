@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Metadata</title>
+    <script type="text/javascript" src="../../public/js/jquery-2.0.1.min.js"></script>
+    <script type="text/javascript" src="../../public/js/lodash.min.js"></script>
+    <script type="text/javascript">
+
+     $(function(){
+
+         $("#update").click(function(){
+
+             console.log('Clicked');
+
+             var id = $("#mediaid").val();
+             var k1 = $("#key1").val();
+             var k2 = $("#key2").val();
+             var k3 = $("#key3").val();
+             var v1 = $("#value1").val();
+             var v2 = $("#value2").val();
+             var v3 = $("#value3").val();
+
+             var changeSet = {};
+
+             if (!_.isEmpty(id)){
+
+                 console.log("Id is not empty");
+
+                 if (!_.isEmpty(k1) && !_.isEmpty(v1)){
+
+                     changeSet[k1] = v1;
+                 }
+
+                 if (!_.isEmpty(k2) && !_.isEmpty(v2)){
+
+                     changeSet[k2] = v2;
+                 }
+
+                 if (!_.isEmpty(k3) && !_.isEmpty(v3)){
+
+                     changeSet[k3] = v3;
+                 }
+
+                 var url = "/media/" + id + "/update";
+
+                 console.log("Posting results");
+
+                 $.post(url, changeSet, function(data){
+
+                     console.log("Posted: " + data);
+
+                     $("#results").text(JSON.stringify(data));
+                 });
+
+             };
+         });
+     });
+
+    </script>
+</head>
+<body>
+   <p>ID: <input type="text" id="mediaid" /></p>
+   <p>
+     Key: <input type="text" id="key1" /> Value: <input type="text" id="value1" />
+   </p>
+   <p>
+     Key: <input type="text" id="key2" /> Value: <input type="text" id="value2" />
+   </p>
+   <p>
+     Key: <input type="text" id="key3" /> Value: <input type="text" id="value3" />
+   </p>
+   <p><button id="update" type="button">Update Metadata</button></p>
+   <p>Results: <pre id="results"></pre></p>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV Uploader</title>
+    <script type="text/javascript" src="dpd.js"></script>
+    <script type="text/javascript" src="/js/md5.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.0.1.min.js"></script>
+    <script type="text/javascript" src="/js/lodash.min.js"></script>
+    <script type="text/javascript" src="/js/utils.js"></script>
+    <script type="text/javascript" src="/js/people.js"></script>
+    <script type="text/javascript" src="/js/links.js"></script>
+    <script type="text/javascript">
+
+        var executeProcessingTask = function(dataset, separator, objConverter, persister, wait){
+            setTimeout(function(){
+                dataset.forEach(function(line){
+
+                    parsedLine = line.split(separator);
+
+                    obj = objConverter(parsedLine);
+
+                    persister(obj);
+                });
+            }, wait);
+        };
+
+        var parseConvertPersist = function(content, separator, init, objConverter, persister){
+
+            init(function(){
+                var lines = content.split(/\n|\r/gim);
+
+                var bucket = makeBucket(lines);
+
+                var s = 0;
+
+                for (var b in bucket){
+
+                    var wait = s++ * 1000;
+
+                    executeProcessingTask(bucket[b], separator, objConverter, persister, wait);
+                }
+            });
+        };
+
+
+        $(function(){
+
+           window.$log = $("#log");
+
+           $("#parseAndSend").click(function(){
+
+               content = $("#csvContent").val();
+               separator = $("#separator").val();
+               type = $("input[name=type]:checked").val();
+               converter = (type === "people")? peopleHandler: linksHandler;
+               persister = (type === "people")? peoplePersister : linksPersister;
+               init = (type === "people")? peopleInit : linksInit;
+
+               parseConvertPersist(content, separator, init, converter, persister);
+           });
+
+
+           $("#purgeAllRecords").click(function(){
+
+               type = $("input[name=type]:checked").val();
+               purgeFunction = (type === "people")? purgeAllPeople : purgeAllLinks;
+               purgeFunction();
+           });
+
+
+           $("#clear").click(function(){
+
+               clear();
+           });
+        });
+
+    </script>
+</head>
+<body style="padding: 100px">
+    <h1>Syrian Dataset Importer</h1>
+    <p>
+        <input name="type" type="radio" checked value="people"> People
+        <input name="type" type="radio" style="margin-left: 25px" value="links"> Links
+        <input type="text" id="separator" value="	" style="width: 25px; margin-left: 25px" /> Cell Separator (default = tab)
+    </p>
+    <p>
+   <textarea id="csvContent" cols="100" rows=25></textarea>
+    </p>
+    <p>
+    <button type="button" id="parseAndSend">Parse and Send</button>
+    <button type="button" id="purgeAllRecords">Purge Existing Records</button>
+    </p>
+    <hr />
+    <h4>Activity Log <span style="margin-left: 50px;"><button id="clear" type="button">Clear</button></span></h4>
+    <div id="log"></div>
+
+</body>
+</html>
